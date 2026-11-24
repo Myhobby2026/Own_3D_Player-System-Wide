@@ -1,10 +1,7 @@
 package com.neonplayer.systemwide.ui
 
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.widget.SeekBar
@@ -16,14 +13,13 @@ import com.neonplayer.systemwide.R
 import com.neonplayer.systemwide.databinding.ActivityMainBinding
 import com.neonplayer.systemwide.dsp.EffectSettings
 import com.neonplayer.systemwide.dsp.EffectState
-import com.neonplayer.systemwide.player.AudioEffectController
+import com.neonplayer.systemwide.player.PcmPlayer
 import com.neonplayer.systemwide.systemwide.SystemWideSetupActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var mediaPlayer: MediaPlayer? = null
-    private val effectController = AudioEffectController()
+    private var pcmPlayer: PcmPlayer? = null
     private var currentUri: Uri? = null
 
     private val openAudioLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -142,9 +138,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateSettings(transform: (EffectSettings) -> EffectSettings) {
         EffectState.update(transform)
-        val s = EffectState.current()
-        effectController.apply(s)
-        applyPan(s.pan)
+        pcmPlayer?.updateSettings()
+    }
+
+    private fun ensurePlayer(): PcmPlayer {
+        val existing = pcmPlayer
+        if (existing != null) return existing
+        val player = PcmPlayer(applicationContext)
+        player.listener = object : PcmPlayer.Listener {
+            override fun onPrepared() {
+                runOnUiThread {
+                    player.updateSettings()
+                    player.play()
+                    binding.btnPlayPause.text = getString(R.string.pause)
+                }
+            }
+
+            override fun onCompletion() {
+                runOnUiThread { binding.btnPlayPause.text = getString(R.string.play) }
+            }
+
+            override fun onError(message: String) {
+                runOnUiThread { toast("Playback error: $message") }
+            }
+        }
+        pcmPlayer = player
+        return player
     }
 
     private fun loadTrack(uri: Uri) {
@@ -152,74 +171,35 @@ class MainActivity : AppCompatActivity() {
         currentUri = uri
         binding.trackName.text = resolveDisplayName(uri)
         try {
-            val mp = MediaPlayer().apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
-                )
-                setDataSource(this@MainActivity, uri)
-                setOnPreparedListener {
-                    effectController.attachToSession(audioSessionId)
-                    effectController.apply(EffectState.current())
-                    applyPan(EffectState.current().pan)
-                    start()
-                    binding.btnPlayPause.text = getString(R.string.pause)
-                }
-                setOnCompletionListener {
-                    binding.btnPlayPause.text = getString(R.string.play)
-                }
-                setOnErrorListener { _, _, _ ->
-                    toast("Playback error")
-                    true
-                }
-                prepareAsync()
-            }
-            mediaPlayer = mp
+            val player = ensurePlayer()
+            player.updateSettings()
+            player.setDataSource(uri)
         } catch (e: Exception) {
             toast("Unable to open audio: ${e.message}")
         }
     }
 
     private fun togglePlayPause() {
-        val mp = mediaPlayer ?: run {
+        val player = pcmPlayer
+        if (player == null || !player.isPrepared) {
             currentUri?.let { loadTrack(it) } ?: toast("Open an audio file first")
             return
         }
-        try {
-            if (mp.isPlaying) {
-                mp.pause()
-                binding.btnPlayPause.text = getString(R.string.play)
-            } else {
-                mp.start()
-                binding.btnPlayPause.text = getString(R.string.pause)
-            }
-        } catch (_: IllegalStateException) {
-            currentUri?.let { loadTrack(it) }
+        if (player.isPlaying) {
+            player.pause()
+            binding.btnPlayPause.text = getString(R.string.play)
+        } else {
+            player.play()
+            binding.btnPlayPause.text = getString(R.string.pause)
         }
     }
 
     private fun stopPlayback(releaseOnly: Boolean = false) {
-        try {
-            mediaPlayer?.let { mp ->
-                if (mp.isPlaying) mp.stop()
-                mp.reset()
-                mp.release()
-            }
-        } catch (_: Exception) {}
-        mediaPlayer = null
-        effectController.release()
+        try { pcmPlayer?.release() } catch (_: Exception) {}
+        pcmPlayer = null
         if (!releaseOnly) {
             binding.btnPlayPause.text = getString(R.string.play)
         }
-    }
-
-    private fun applyPan(pan: Int) {
-        val p = pan.coerceIn(-100, 100) / 100f
-        val left = (if (p <= 0f) 1f else 1f - p).coerceIn(0f, 1f)
-        val right = (if (p >= 0f) 1f else 1f + p).coerceIn(0f, 1f)
-        try { mediaPlayer?.setVolume(left, right) } catch (_: Exception) {}
     }
 
     private fun resolveDisplayName(uri: Uri): String {

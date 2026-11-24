@@ -5,7 +5,7 @@ Neon-styled Android 3D audio player with **system-wide** DSP effects, inspired b
 ## Features
 
 - **Neon GUI** - dark neon cyan/magenta theme with glowing rounded controls.
-- **In-app 3D Player** - open and play local audio files.
+- **In-app 3D Player** - open and play local audio files, decoded through the PCM DSP engine so effects apply in real time.
 - **5-band Equalizer** - 60 Hz, 230 Hz, 910 Hz, 3.6 kHz, 14 kHz.
 - **Virtual 3D** - spatial widening effect with a **rounded MIX level control** to adjust desired effect intensity.
 - **Surround 7.1** - virtual surround effect with a **rounded MIX level control** to adjust desired effect intensity.
