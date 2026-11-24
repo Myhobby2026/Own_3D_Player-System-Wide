@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app_gradient"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:letterSpacing="0.12"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:text="OWN 3D PLAYER"
+            android:textColor="@color/neon_cyan"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:text="SYSTEM-WIDE • NEON DSP"
+            android:textColor="@color/neon_magenta"
+            android:textSize="12sp"
+            android:letterSpacing="0.2" />
+
+        <!-- Player Panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOW PLAYING"
+                style="@style/NeonPanelTitle" />
+
+            <TextView
+                android:id="@+id/trackName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/no_track"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnOpen"
+                    style="@style/NeonButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/open_audio" />
+
+                <Button
+                    android:id="@+id/btnPlayPause"
+                    style="@style/NeonButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/play" />
+
+                <Button
+                    android:id="@+id/btnStop"
+                    style="@style/NeonButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/stop" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- System-wide button -->
+        <Button
+            android:id="@+id/btnSystemWide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_neon_button"
+            android:text="@string/system_wide_effects"
+            android:textAllCaps="false"
+            android:textColor="@color/neon_magenta"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Equalizer Panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/equalizer"
+                    style="@style/NeonPanelTitle" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchEq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <!-- EQ bands -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="60 Hz" android:textColor="@color/text_secondary" android:textSize="11sp" android:paddingTop="8dp"/>
+            <SeekBar android:id="@+id/eqBand0" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="3000" android:progress="1500" android:progressTint="@color/neon_cyan" android:thumbTint="@color/neon_cyan"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="230 Hz" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+            <SeekBar android:id="@+id/eqBand1" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="3000" android:progress="1500" android:progressTint="@color/neon_cyan" android:thumbTint="@color/neon_cyan"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="910 Hz" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+            <SeekBar android:id="@+id/eqBand2" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="3000" android:progress="1500" android:progressTint="@color/neon_cyan" android:thumbTint="@color/neon_cyan"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="3.6 kHz" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+            <SeekBar android:id="@+id/eqBand3" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="3000" android:progress="1500" android:progressTint="@color/neon_cyan" android:thumbTint="@color/neon_cyan"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="14 kHz" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+            <SeekBar android:id="@+id/eqBand4" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="3000" android:progress="1500" android:progressTint="@color/neon_cyan" android:thumbTint="@color/neon_cyan"/>
+        </LinearLayout>
+
+        <!-- 3D / Surround Panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SPATIAL FX"
+                style="@style/NeonPanelTitle" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch3d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/virtual_3d"
+                        android:textColor="@color/text_primary" />
+
+                    <com.neonplayer.systemwide.ui.NeonKnobView
+                        android:id="@+id/knob3dMix"
+                        android:layout_width="140dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchSurround"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/surround_7_1"
+                        android:textColor="@color/text_primary" />
+
+                    <com.neonplayer.systemwide.ui.NeonKnobView
+                        android:id="@+id/knobSurroundMix"
+                        android:layout_width="140dp"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Mix level rounded controls adjust the desired effect intensity"
+                android:textColor="@color/text_dim"
+                android:textSize="11sp"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+        <!-- Bass / Treble / Pan Panel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TONE &amp; BALANCE"
+                style="@style/NeonPanelTitle" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchBass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/bass_boost"
+                        android:textColor="@color/text_primary" />
+
+                    <com.neonplayer.systemwide.ui.NeonKnobView
+                        android:id="@+id/knobBass"
+                        android:layout_width="140dp"
+                        android:layout_height="160dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchTreble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/treble_boost"
+                        android:textColor="@color/text_primary" />
+
+                    <com.neonplayer.systemwide.ui.NeonKnobView
+                        android:id="@+id/knobTreble"
+                        android:layout_width="140dp"
+                        android:layout_height="160dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/pan"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L"
+                    android:textColor="@color/neon_cyan"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/seekPan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="200"
+                    android:progress="100"
+                    android:progressTint="@color/neon_magenta"
+                    android:thumbTint="@color/neon_magenta" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R"
+                    android:textColor="@color/neon_magenta"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/panValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Center"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Own 3D Player</string>
+    <string name="system_wide_effects">System-Wide Effects</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="virtual_3d">Virtual 3D</string>
+    <string name="surround_7_1">Surround 7.1</string>
+    <string name="bass_boost">Bass Boost</string>
+    <string name="treble_boost">Treble Boost</string>
+    <string name="pan">Pan</string>
+    <string name="mix_level">Mix Level</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="open_audio">Open Audio</string>
+    <string name="no_track">No track loaded</string>
+    <string name="preset">Preset</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="status_processing">Processing system-wide audio</string>
+    <string name="start_system_wide">Start System-Wide Effects</string>
+    <string name="stop_system_wide">Stop System-Wide Effects</string>
+    <string name="reload_preset">Reload Preset</string>
+    <string name="copy_adb">Copy ADB Setup Commands</string>
+    <string name="grant_permissions">Grant Microphone / Notification</string>
+    <string name="open_dev_options">Open Developer Options</string>
+    <string name="adb_required_title">ADB setup required</string>
+    <string name="adb_required_msg">Run these commands once, then return here:\n\n%1$s</string>
+    <string name="system_wide_desc">ADB-granted DUMP + Android audio capture. Applies the player\'s neon DSP to other apps.\n\nSame approach as the reference: MediaProjection capture → DSP → non-capturable AudioTrack, with DUMP-discovered source sessions muted to avoid double audio.</string>
+    <string name="limitations">Limitations: apps that block internal audio capture cannot be processed. Calls, alarms and other non-media usage are left untouched. Some devices reject the mute effect; the service stops safely instead of playing double audio. Android may show a cast indicator.</string>
+    <string name="notification_channel">System-wide effects</string>
+    <string name="notification_desc">Rootless audio capture and DSP processing</string>
+</resources>
